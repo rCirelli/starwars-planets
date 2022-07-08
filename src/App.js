@@ -1,11 +1,16 @@
 import React from 'react';
+import Table from './components/Table';
 import Wrapper from './components/Wrapper';
-import Home from './pages/Home';
+import PlanetProvider from './context/providers/PlanetsProvider';
+// import Intro from './components/Intro';
 
 function App() {
   return (
     <Wrapper>
-      <Home />
+      <PlanetProvider>
+        <Table />
+      </PlanetProvider>
+      {/* <Intro /> */}
     </Wrapper>
   );
 }

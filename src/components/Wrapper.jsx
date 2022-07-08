@@ -6,7 +6,10 @@ function Wrapper({ children }) {
   return (
     <>
       <div className="stars" />
-      <div className="p-10 min-h-screen bg-black text-white">
+      <div
+        className="p-10 min-h-screen max-w-screen bg-black text-white
+        flex flex-col justify-center items-center"
+      >
         {children}
       </div>
     </>
