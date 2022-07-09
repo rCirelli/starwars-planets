@@ -13,9 +13,12 @@ function TableHeader({ headerContent }) {
 
   return (
     <thead
-      className="w-full border-b border-emerald-900"
+      className="w-full border-b border-star-wars-blue/50"
     >
-      <tr className="flex justify-evenly items-center text-sm text-slate-400">
+      <tr
+        className="flex justify-evenly items-center text-sm text-star-wars-blue
+        font-thin py-2"
+      >
         {headers}
       </tr>
     </thead>

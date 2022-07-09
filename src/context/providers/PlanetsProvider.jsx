@@ -3,9 +3,12 @@ import React, { useState, useEffect } from 'react';
 import PlanetsContext from '../PlanetsContext';
 
 function PlanetProvider({ children }) {
+  const [isLogoVisible, setIsLogoVisible] = useState(false);
+
   const [planetsList, setPlanetsList] = useState([]);
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
+  const [textFilter, setTextFilter] = useState('');
 
   useEffect(() => {
     const ENDPOINT = 'https://swapi.dev/api/planets';
@@ -20,7 +23,21 @@ function PlanetProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  const context = { planetsList, error, isFetching };
+  const context = {
+    planetsList,
+    error,
+    isFetching,
+    intro: {
+      isLogoVisible,
+      setIsLogoVisible,
+    },
+    filters: {
+      text: {
+        textFilter,
+        setTextFilter,
+      },
+    },
+  };
 
   return (
     <PlanetsContext.Provider value={ context }>

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import PlanetsContext from '../context/PlanetsContext';
 
 function Intro() {
   const [timerID, setTimerID] = useState('');
-  const [isLogoVisible, setIsLogoVisible] = useState(false);
+  const { intro: { isLogoVisible, setIsLogoVisible } } = useContext(PlanetsContext);
 
   useEffect(() => {
     const FIVE_SECONDS = 4000;
