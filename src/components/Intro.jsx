@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Intro() {
-  const [timerID, setTimerID] = useState('');
   const { intro: { isLogoVisible, setIsLogoVisible } } = useContext(PlanetsContext);
 
   useEffect(() => {
-    const FIVE_SECONDS = 4000;
+    const audio = new Audio('/assets/Star Wars Theme Song By John Williams.mp3');
+    const FOUR_SECONDS = 4000;
     const id = setTimeout(() => {
       setIsLogoVisible(true);
-    }, FIVE_SECONDS);
-    setTimerID(id);
+      audio.play();
+      console.log(audio);
+    }, FOUR_SECONDS);
 
-    return () => clearTimeout(timerID);
-  }, []);
+    return () => clearTimeout(id);
+  }, [setIsLogoVisible]);
 
   return (
     <div className="flex justify-center">

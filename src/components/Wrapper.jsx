@@ -5,10 +5,10 @@ import '../stars.css';
 function Wrapper({ children }) {
   return (
     <>
-      <div className="stars" />
+      <div className="stars z-1" />
       <div
         className="p-10 min-h-screen max-w-screen bg-black text-white
-        flex flex-col justify-center items-center"
+        flex flex-col justify-center items-center z-10"
       >
         {children}
       </div>
