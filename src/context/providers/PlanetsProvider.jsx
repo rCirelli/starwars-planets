@@ -1,6 +1,9 @@
 import { PropTypes } from 'prop-types';
 import React, { useState, useEffect } from 'react';
+// import useColumnFilter from '../../hooks/useColumnFilter';
+import useTextFilter from '../../hooks/useTextFilter';
 import PlanetsContext from '../PlanetsContext';
+import columnFilter from '../../helpers/columnFilter';
 
 function PlanetProvider({ children }) {
   const [isLogoVisible, setIsLogoVisible] = useState(false);
@@ -8,7 +11,22 @@ function PlanetProvider({ children }) {
   const [planetsList, setPlanetsList] = useState([]);
   const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
+
   const [textFilter, setTextFilter] = useState('');
+  const [
+    textFilterPlanetsList,
+    setTextFilterPlanetsList,
+    initialTextList] = useTextFilter([]);
+
+  const [numericFilter, setNumericFilter] = useState({
+    column: '',
+    operator: '',
+    value: '0',
+  });
+  // const [
+  //   columnFilterPlanetsList,
+  //   setColumnFilterPlanetsList,
+  //   initialColumnList] = useColumnFilter([]);
 
   useEffect(() => {
     const ENDPOINT = 'https://swapi.dev/api/planets';
@@ -18,13 +36,30 @@ function PlanetProvider({ children }) {
         .then((response) => response.json())
         .then((json) => setPlanetsList(json.results))
         .catch((e) => setError(e.message))
-        .finally(() => setIsFetching(false));
+        .finally(() => {
+          setIsFetching(false);
+        });
     };
     fetchPlanets();
   }, []);
 
+  useEffect(() => {
+    initialTextList(planetsList);
+    // initialColumnList(planetsList);
+  }, [planetsList]);
+
+  useEffect(() => {
+    setTextFilterPlanetsList(textFilter);
+  }, [textFilter]);
+
+  useEffect(() => {
+    setTextFilterPlanetsList(textFilter);
+  }, [numericFilter]);
+
+  const filteredList = columnFilter(textFilterPlanetsList, numericFilter);
+
   const context = {
-    planetsList,
+    planetsList: filteredList,
     error,
     isFetching,
     intro: {
@@ -35,6 +70,10 @@ function PlanetProvider({ children }) {
       text: {
         textFilter,
         setTextFilter,
+      },
+      numeric: {
+        numericFilter,
+        setNumericFilter,
       },
     },
   };

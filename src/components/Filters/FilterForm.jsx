@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import PlanetsContext from '../context/PlanetsContext';
+import PlanetsContext from '../../context/PlanetsContext';
+import FilterBy from './FilterBy';
 
-function Filter() {
+function FilterForm() {
   const { filters: { text: { textFilter, setTextFilter } } } = useContext(PlanetsContext);
 
   return (
@@ -17,7 +18,7 @@ function Filter() {
       </h3>
       <label
         htmlFor="name-filter"
-        className="flex flex-col items-start"
+        className="flex flex-col items-start mb-5"
       >
         <input
           placeholder="Filter"
@@ -37,8 +38,9 @@ function Filter() {
           Filter
         </span>
       </label>
+      <FilterBy />
     </div>
   );
 }
 
-export default Filter;
+export default FilterForm;

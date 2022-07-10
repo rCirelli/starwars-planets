@@ -6,11 +6,10 @@ function Intro() {
 
   useEffect(() => {
     const audio = new Audio('/assets/Star Wars Theme Song By John Williams.mp3');
-    const FOUR_SECONDS = 4000;
+    const FOUR_SECONDS = 400;
     const id = setTimeout(() => {
       setIsLogoVisible(true);
       audio.play();
-      console.log(audio);
     }, FOUR_SECONDS);
 
     return () => clearTimeout(id);
