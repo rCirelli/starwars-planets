@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Dropdown({ label, options, values, id, onChange }) {
+function Dropdown({ label, options, values, id, onChange, defaultValue }) {
   return (
     <div className="flex flex-col">
       <label
@@ -16,10 +16,17 @@ function Dropdown({ label, options, values, id, onChange }) {
         data-testid={ id }
         id={ id }
         onChange={ ({ target }) => onChange(target.value) }
+        value={ defaultValue }
       >
         {
           options.map((option, i) => (
-            <option key={ i + 1 } value={ values[i] }>{option}</option>))
+            <option
+              key={ i + 1 }
+              value={ values[i] }
+              // selected={ defaultValue === option }
+            >
+              {option}
+            </option>))
         }
       </select>
     </div>
@@ -28,10 +35,13 @@ function Dropdown({ label, options, values, id, onChange }) {
 
 export default Dropdown;
 
+Dropdown.defaultProps = { defaultValue: '' };
+
 Dropdown.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
+  defaultValue: PropTypes.string,
 };

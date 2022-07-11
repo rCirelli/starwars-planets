@@ -20,33 +20,33 @@ function columnFilter(planetsList, numericFilter) {
   return filteredLists.at(LAST_ELEMENT);
 }
 
-function recursiveColumnFilter(planetsList, numericFilter, index = 0) {
-  const iterations = numericFilter.length;
-  const list = [...planetsList];
+// o filtro recursivo não funciona direito com o react,
+// pois o react não espera o retorno da ultima chamada da função.
+// function recursiveColumnFilter(planetsList, numericFilter, index = 0) {
+//   const iterations = numericFilter.length;
+//   const list = [...planetsList];
 
-  if (index < iterations) {
-    const { column, operator, value } = numericFilter[index];
+//   if (index < iterations) {
+//     const { column, operator, value } = numericFilter[index];
 
-    const newFilteredList = list.filter((planet) => {
-      const operations = {
-        'maior que': Number(planet[column]) > value,
-        'menor que': Number(planet[column]) < value,
-        'igual a': Number(planet[column]) === value,
-      };
-      return operator ? operations[operator] : planet;
-    });
-    const nextIndex = index + 1;
-    // console.log(newFilteredList, index, 'inside if');
-    recursiveColumnFilter(newFilteredList, numericFilter, nextIndex);
-    return newFilteredList;
-  }
+//     const newFilteredList = list.filter((planet) => {
+//       const operations = {
+//         'maior que': Number(planet[column]) > value,
+//         'menor que': Number(planet[column]) < value,
+//         'igual a': Number(planet[column]) === value,
+//       };
+//       return operator ? operations[operator] : planet;
+//     });
+//     const nextIndex = index + 1;
 
-  // console.log(list, index, 'outside if');
-  return list;
-}
+//     recursiveColumnFilter(newFilteredList, numericFilter, nextIndex);
+//     return newFilteredList;
+//   }
 
-// export default columnFilter;
+//   return list;
+// }
+
 module.exports = {
   columnFilter,
-  recursiveColumnFilter,
+  // recursiveColumnFilter,
 };

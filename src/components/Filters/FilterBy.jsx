@@ -26,6 +26,12 @@ function FilterBy() {
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('0');
 
+  const resetInputValues = () => {
+    setColumnFilter(columnOptions[0]);
+    setComparisonFilter('maior que');
+    setValueFilter('0');
+  };
+
   const handleClick = () => {
     setNumericFilter([...numericFilter,
       {
@@ -33,6 +39,19 @@ function FilterBy() {
         operator: comparisonFilter,
         value: Number(valueFilter),
       }]);
+    resetInputValues();
+  };
+
+  const handleExclude = ({ target }) => {
+    const targetFilter = target.id;
+    if (targetFilter === 'button-remove-filters') {
+      setNumericFilter([]);
+      resetInputValues();
+      return;
+    }
+    const newFiltersArray = numericFilter.filter(({ column }) => column !== targetFilter);
+    setNumericFilter(newFiltersArray);
+    resetInputValues();
   };
 
   // const columnOptions = {
@@ -60,6 +79,7 @@ function FilterBy() {
             options={ columnOptions }
             values={ columnOptions }
             onChange={ setColumnFilter }
+            defaultValue={ columnOptions[0] }
           />
           <Dropdown
             id="comparison-filter"
@@ -67,6 +87,7 @@ function FilterBy() {
             options={ ['maior que', 'menor que', 'igual a'] }
             values={ ['maior que', 'menor que', 'igual a'] }
             onChange={ setComparisonFilter }
+            defaultValue="maior que"
           />
           <Input
             type="number"
@@ -76,7 +97,18 @@ function FilterBy() {
             value={ valueFilter }
             onChange={ setValueFilter }
           />
-          <Button id="button-filter" text="Filtrar" onClick={ handleClick } />
+          <Button
+            id="button-filter"
+            text="Filtrar"
+            onClick={ handleClick }
+          />
+          {selectedFilters.length > 0 && (
+            <Button
+              id="button-remove-filters"
+              text="Limpar Filtros"
+              onClick={ handleExclude }
+              variant="secondary"
+            />)}
         </div>
       </div>
       { selectedFilters.length > 0 && (
@@ -88,9 +120,20 @@ function FilterBy() {
                   key={ i }
                   className="flex items-center gap-1
                   text-sm text-slate-600 italic font-medium"
+                  data-testid="filter"
                 >
                   {filter}
-                  <XCircle size={ 20 } weight="light" className="text-red-500" />
+                  <button
+                    type="button"
+                    onClick={ handleExclude }
+                  >
+                    <XCircle
+                      size={ 20 }
+                      weight="light"
+                      id={ filter }
+                      className="text-star-wars-blue hover:text-red-600"
+                    />
+                  </button>
                 </li>
               ))
             }
