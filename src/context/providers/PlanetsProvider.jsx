@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // import useColumnFilter from '../../hooks/useColumnFilter';
 import useTextFilter from '../../hooks/useTextFilter';
 import PlanetsContext from '../PlanetsContext';
-import columnFilter from '../../helpers/columnFilter';
+import { columnFilter } from '../../helpers/columnFilter';
 
 function PlanetProvider({ children }) {
   const [isLogoVisible, setIsLogoVisible] = useState(false);
@@ -18,15 +18,15 @@ function PlanetProvider({ children }) {
     setTextFilterPlanetsList,
     initialTextList] = useTextFilter([]);
 
-  const [numericFilter, setNumericFilter] = useState({
-    column: '',
-    operator: '',
-    value: '0',
-  });
-  // const [
-  //   columnFilterPlanetsList,
-  //   setColumnFilterPlanetsList,
-  //   initialColumnList] = useColumnFilter([]);
+  const [numericFilter, setNumericFilter] = useState([]);
+  // {
+  //   column: '',
+  //   operator: '',
+  //   value: '0',
+  // }
+
+  // const [filteredList, setFilteredList] = useState([]);
+  // const [columnFilterList, setColumnFilterList, initialColumList] = useColumnFilter([]);
 
   useEffect(() => {
     const ENDPOINT = 'https://swapi.dev/api/planets';
@@ -45,18 +45,33 @@ function PlanetProvider({ children }) {
 
   useEffect(() => {
     initialTextList(planetsList);
-    // initialColumnList(planetsList);
+    // setFilteredList(planetsList);
+    // initialColumList(planetsList);
   }, [planetsList]);
 
   useEffect(() => {
     setTextFilterPlanetsList(textFilter);
   }, [textFilter]);
 
-  useEffect(() => {
-    setTextFilterPlanetsList(textFilter);
-  }, [numericFilter]);
+  // useEffect(() => {
+  //   // setTextFilterPlanetsList(textFilter);
+  //   const updateFilteredList = async () => {
+  //     // const filtered = await columnFilter(textFilterPlanetsList, numericFilter);
+  //     setColumnFilterList({ list: textFilterPlanetsList, filter: numericFilter });
+  //     // setFilteredList(filtered);
+  //   };
+  //   updateFilteredList();
+  // }, [numericFilter, textFilterPlanetsList]);
 
+  // useEffect(() => {
+  //   setFilteredList(columnFilterList);
+  // }, [columnFilterList]);
+
+  // const unfilteredList = textFilterPlanetsList;
+  // const filteredList = recursiveColumnFilter(textFilterPlanetsList, numericFilter);
   const filteredList = columnFilter(textFilterPlanetsList, numericFilter);
+  // console.log(columnFilter(textFilterPlanetsList, numericFilter));
+  // console.log('provider', filteredList);
 
   const context = {
     planetsList: filteredList,

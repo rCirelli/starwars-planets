@@ -1,37 +1,25 @@
 import { useEffect, useState } from 'react';
+import columnFilter from '../helpers/columnFilter';
 
 function useColumnFilter() {
   const [filteredList, setFilteredList] = useState([]);
-  const [initialList, setInitialList] = useState([]);
-  const [numericFilter, setNumericFilter] = useState('');
+  const INITIAL_STATE = {
+    list: [],
+    filter: [],
+  };
+  const [listAndFilter, setListAndFilter] = useState(INITIAL_STATE);
 
   useEffect(() => {
-    if (filteredList && filteredList.length === 0) {
-      setFilteredList([...initialList]);
-    }
-  }, [initialList]);
+    const { list, filter } = listAndFilter;
+    const updateList = () => {
+      const teste = columnFilter(list, filter);
+      console.log(teste, 'teste');
+      setFilteredList(teste);
+    };
+    updateList();
+  }, [listAndFilter]);
 
-  useEffect(() => {
-    if (filteredList) {
-      const { column, operator, value } = numericFilter;
-
-      const newList = initialList.filter((planet) => {
-        if (operator === '>') {
-          return Number(planet[column]) > value;
-        }
-        if (operator === '<') {
-          return Number(planet[column]) < value;
-        }
-        if (operator === '===') {
-          return Number(planet[column]) === value;
-        }
-        return planet;
-      });
-      setFilteredList(newList);
-    }
-  }, [numericFilter]);
-
-  return [filteredList, setNumericFilter, setInitialList];
+  return [filteredList, setListAndFilter];
 }
 
 export default useColumnFilter;

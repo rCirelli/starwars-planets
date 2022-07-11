@@ -55,7 +55,7 @@ function Table() {
       { error && <span>error</span> }
       { !isFetching
         ? table
-        : ''}
+        : 'Loading...'}
     </div>
   );
 }
