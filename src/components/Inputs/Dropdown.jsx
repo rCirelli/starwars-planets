@@ -16,14 +16,13 @@ function Dropdown({ label, options, values, id, onChange, defaultValue }) {
         data-testid={ id }
         id={ id }
         onChange={ ({ target }) => onChange(target.value) }
-        value={ defaultValue }
+        defaultValue={ defaultValue }
       >
         {
           options.map((option, i) => (
             <option
               key={ i + 1 }
               value={ values[i] }
-              // selected={ defaultValue === option }
             >
               {option}
             </option>))

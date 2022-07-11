@@ -20,8 +20,7 @@ function columnFilter(planetsList, numericFilter) {
   return filteredLists.at(LAST_ELEMENT);
 }
 
-// o filtro recursivo não funciona direito com o react,
-// pois o react não espera o retorno da ultima chamada da função.
+// o filtro recursivo não funciona direito no react
 // function recursiveColumnFilter(planetsList, numericFilter, index = 0) {
 //   const iterations = numericFilter.length;
 //   const list = [...planetsList];

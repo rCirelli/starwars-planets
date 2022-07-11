@@ -1,4 +1,4 @@
-import { XCircle } from 'phosphor-react';
+import { DotsThreeVertical, XCircle } from 'phosphor-react';
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../../context/PlanetsContext';
 import Button from '../Inputs/Button';
@@ -20,25 +20,34 @@ function FilterBy() {
     'diameter',
     'rotation_period',
     'surface_water',
-  ].filter((option) => !selectedFilters.includes(option));
+  ];
 
-  const [columnFilter, setColumnFilter] = useState(columnOptions[0]);
+  const filterColumnOptions = columnOptions
+    .filter((option) => !selectedFilters.includes(option));
+
+  const [columnFilter, setColumnFilter] = useState(filterColumnOptions[0]);
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('0');
 
+  // const DEFAULT_ORDER = { order: { column: 'population', sort: 'ASC' } };
+
+  // const [order, setOrder] = useState(DEFAULT_ORDER);
+
   const resetInputValues = () => {
-    setColumnFilter(columnOptions[0]);
+    setColumnFilter(filterColumnOptions[0]);
     setComparisonFilter('maior que');
     setValueFilter('0');
   };
 
   const handleClick = () => {
-    setNumericFilter([...numericFilter,
+    setNumericFilter([
+      ...numericFilter,
       {
         column: columnFilter,
         operator: comparisonFilter,
         value: Number(valueFilter),
-      }]);
+      },
+    ]);
     resetInputValues();
   };
 
@@ -49,7 +58,9 @@ function FilterBy() {
       resetInputValues();
       return;
     }
-    const newFiltersArray = numericFilter.filter(({ column }) => column !== targetFilter);
+    const newFiltersArray = numericFilter.filter(
+      ({ column }) => column !== targetFilter,
+    );
     setNumericFilter(newFiltersArray);
     resetInputValues();
   };
@@ -76,10 +87,10 @@ function FilterBy() {
           <Dropdown
             id="column-filter"
             label="Coluna"
-            options={ columnOptions }
-            values={ columnOptions }
+            options={ filterColumnOptions }
+            values={ filterColumnOptions }
             onChange={ setColumnFilter }
-            defaultValue={ columnOptions[0] }
+            defaultValue={ filterColumnOptions[0] }
           />
           <Dropdown
             id="comparison-filter"
@@ -97,47 +108,51 @@ function FilterBy() {
             value={ valueFilter }
             onChange={ setValueFilter }
           />
-          <Button
-            id="button-filter"
-            text="Filtrar"
-            onClick={ handleClick }
-          />
+          <Button id="button-filter" text="Filtrar" onClick={ handleClick } />
           {selectedFilters.length > 0 && (
             <Button
               id="button-remove-filters"
               text="Limpar Filtros"
               onClick={ handleExclude }
               variant="secondary"
-            />)}
+            />
+          )}
+          <DotsThreeVertical size={ 45 } />
+          <Dropdown
+            id="column-sort"
+            label="Ordenar"
+            options={ columnOptions }
+            values={ columnOptions }
+            onChange={ setOrder }
+            defaultValue={ columnOptions[0] }
+          />
         </div>
       </div>
-      { selectedFilters.length > 0 && (
-        <div className="mt-5 px-10">
-          <ul className="flex flex-wrap gap-14">
-            {
-              selectedFilters.map((filter, i) => (
-                <li
-                  key={ i }
-                  className="flex items-center gap-1
-                  text-sm text-slate-600 italic font-medium"
-                  data-testid="filter"
-                >
-                  {filter}
-                  <button
-                    type="button"
-                    onClick={ handleExclude }
-                  >
-                    <XCircle
-                      size={ 20 }
-                      weight="light"
-                      id={ filter }
-                      className="text-star-wars-blue hover:text-red-600"
-                    />
-                  </button>
-                </li>
-              ))
-            }
-          </ul>
+      {selectedFilters.length > 0 && (
+        <div className="mt-5 px-10 flex flex-wrap gap-14">
+          {selectedFilters.map((filter, i) => (
+            <div
+              key={ i }
+              data-testid="filter"
+              className="flex items-center gap-2"
+            >
+              <span
+                className="text-slate-500 text-sm italic font-medium antialiased"
+              >
+                {filter}
+              </span>
+              <button
+                type="button"
+                onClick={ handleExclude }
+                id={ filter }
+                className="text-star-wars-blue hover:text-red-600
+                font-light"
+              >
+                x
+                <XCircle size={ 20 } weight="light" />
+              </button>
+            </div>
+          ))}
         </div>
       )}
     </div>

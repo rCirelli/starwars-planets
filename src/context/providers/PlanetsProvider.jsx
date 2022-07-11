@@ -8,8 +8,8 @@ function PlanetProvider({ children }) {
   const [isLogoVisible, setIsLogoVisible] = useState(false);
 
   const [planetsList, setPlanetsList] = useState([]);
-  const [error, setError] = useState('');
   const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState('');
 
   const [textFilter, setTextFilter] = useState('');
   const [
