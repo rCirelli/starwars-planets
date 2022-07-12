@@ -23,6 +23,8 @@ function PlanetProvider({ children }) {
   //   operator: '',
   //   value: '0',
   // }
+  const DEFAULT_ORDER = { column: 'name', sort: 'ASC' };
+  const [order, setOrder] = useState(DEFAULT_ORDER);
 
   useEffect(() => {
     const ENDPOINT = 'https://swapi.dev/api/planets';
@@ -66,6 +68,10 @@ function PlanetProvider({ children }) {
         numericFilter,
         setNumericFilter,
       },
+    },
+    sort: {
+      order,
+      setOrder,
     },
   };
 

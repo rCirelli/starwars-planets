@@ -10,6 +10,10 @@ function FilterBy() {
     filters: {
       numeric: { numericFilter, setNumericFilter },
     },
+    sort: {
+      order,
+      setOrder,
+    },
   } = useContext(PlanetsContext);
 
   const selectedFilters = numericFilter.map((filter) => filter.column);
@@ -29,9 +33,8 @@ function FilterBy() {
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('0');
 
-  // const DEFAULT_ORDER = { order: { column: 'population', sort: 'ASC' } };
-
-  // const [order, setOrder] = useState(DEFAULT_ORDER);
+  const [orderDropdown, setOrderDropdown] = useState('population');
+  const [orderRadios, setOrderRadios] = useState(order.sort);
 
   const resetInputValues = () => {
     setColumnFilter(filterColumnOptions[0]);
@@ -65,6 +68,14 @@ function FilterBy() {
     resetInputValues();
   };
 
+  const handleSetOrder = () => {
+    const newOrder = {
+      column: orderDropdown,
+      sort: orderRadios,
+    };
+    setOrder(newOrder);
+  };
+
   // const columnOptions = {
   //   'Population': 'population',
   //   'Orbital Period': 'orbital_period',
@@ -74,60 +85,102 @@ function FilterBy() {
   // };
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col gap-7">
-        <div className="flex justify-center items-end gap-10">
-          {/* <Dropdown
+    <div className="w-full flex flex-col gap-7">
+      <div className="flex justify-center items-end gap-10">
+        {/* <Dropdown
           id="column-filter"
           label="Coluna"
           options={ Object.keys(columnOptions) }
           values={ Object.values(columnOptions) }
           onChange={ setColumnFilter }
-        /> */}
-          <Dropdown
-            id="column-filter"
-            label="Coluna"
-            options={ filterColumnOptions }
-            values={ filterColumnOptions }
-            onChange={ setColumnFilter }
-            defaultValue={ filterColumnOptions[0] }
+          /> */}
+        <Dropdown
+          id="column-filter"
+          label="Coluna"
+          options={ filterColumnOptions }
+          values={ filterColumnOptions }
+          onChange={ setColumnFilter }
+          defaultValue={ filterColumnOptions[0] }
+        />
+        <Dropdown
+          id="comparison-filter"
+          label=""
+          options={ ['maior que', 'menor que', 'igual a'] }
+          values={ ['maior que', 'menor que', 'igual a'] }
+          onChange={ setComparisonFilter }
+          defaultValue="maior que"
+        />
+        <Input
+          type="number"
+          id="value-filter"
+          label="Valor"
+          placeholder="0"
+          value={ valueFilter }
+          onChange={ setValueFilter }
+        />
+        <Button id="button-filter" text="Filtrar" onClick={ handleClick } />
+        {selectedFilters.length > 0 && (
+          <Button
+            id="button-remove-filters"
+            text="Limpar Filtros"
+            onClick={ handleExclude }
+            variant="secondary"
           />
-          <Dropdown
-            id="comparison-filter"
-            label=""
-            options={ ['maior que', 'menor que', 'igual a'] }
-            values={ ['maior que', 'menor que', 'igual a'] }
-            onChange={ setComparisonFilter }
-            defaultValue="maior que"
-          />
-          <Input
-            type="number"
-            id="value-filter"
-            label="Valor"
-            placeholder="0"
-            value={ valueFilter }
-            onChange={ setValueFilter }
-          />
-          <Button id="button-filter" text="Filtrar" onClick={ handleClick } />
-          {selectedFilters.length > 0 && (
-            <Button
-              id="button-remove-filters"
-              text="Limpar Filtros"
-              onClick={ handleExclude }
-              variant="secondary"
+        )}
+        <DotsThreeVertical size={ 45 } />
+        <Dropdown
+          id="column-sort"
+          label="Ordenar"
+          options={ columnOptions }
+          values={ columnOptions }
+          onChange={ setOrderDropdown }
+          defaultValue={ orderDropdown }
+        />
+        <div className="flex flex-col items-start justify-center font-normal">
+          <label
+            htmlFor="column-sort-input-asc"
+            className="flex items-center gap-2"
+          >
+            <input
+              type="radio"
+              data-testid="column-sort-input-asc"
+              id="column-sort-input-asc"
+              className="form-check-input appearance-none rounded-full h-4 w-4
+              border border-slate-700 bg-gray-900 checked:bg-star-wars-blue
+              checked:border-4 focus:outline-none transition duration-200
+              bg-no-repeat bg-center bg-contain cursor-pointer"
+              value="ASC"
+              checked={ orderRadios === 'ASC' }
+              onChange={ ({ target }) => setOrderRadios(target.value) }
             />
-          )}
-          <DotsThreeVertical size={ 45 } />
-          <Dropdown
-            id="column-sort"
-            label="Ordenar"
-            options={ columnOptions }
-            values={ columnOptions }
-            onChange={ setOrder }
-            defaultValue={ columnOptions[0] }
-          />
+            Crescente
+          </label>
+          <label
+            htmlFor="column-sort-input-asc"
+            className="flex items-center gap-2"
+          >
+            <input
+              type="radio"
+              data-testid="column-sort-input-desc"
+              id="column-sort-input-desc"
+              className="form-check-input appearance-none rounded-full h-4 w-4
+              border border-slate-700 bg-gray-900 checked:bg-star-wars-blue
+              checked:border-4 focus:outline-none transition duration-200
+              bg-no-repeat bg-center bg-contain cursor-pointer"
+              value="DESC"
+              checked={ orderRadios === 'DESC' }
+              onChange={ ({ target }) => setOrderRadios(target.value) }
+            />
+            Decrescente
+          </label>
         </div>
+        <Button
+          id="column-sort-button"
+          text="Ordenar"
+          onClick={ handleSetOrder }
+        />
       </div>
+      {/* </div> */}
       {selectedFilters.length > 0 && (
         <div className="mt-5 px-10 flex flex-wrap gap-14">
           {selectedFilters.map((filter, i) => (

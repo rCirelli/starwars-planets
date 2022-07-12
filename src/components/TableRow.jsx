@@ -14,6 +14,7 @@ function TableRow({ rowData }) {
         { rowData && (
           <>
             <td
+              data-testid="planet-name"
               className="px-3 border-r border-star-wars-blue/50 flex-1 w-5 break-words
               flex items-center peer"
             >
