@@ -12,7 +12,7 @@ function columnFilter(planetsList, numericFilter) {
         'menor que': Number(planet[column]) < value,
         'igual a': Number(planet[column]) === value,
       };
-      return operator ? operations[operator] : planet;
+      return operations[operator];
     });
     filteredLists.push(newFilteredList);
   });

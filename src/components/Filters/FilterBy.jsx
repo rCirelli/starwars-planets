@@ -104,7 +104,7 @@ function FilterBy() {
         />
         <Dropdown
           id="comparison-filter"
-          label=""
+          label="Comparador"
           options={ ['maior que', 'menor que', 'igual a'] }
           values={ ['maior que', 'menor que', 'igual a'] }
           onChange={ setComparisonFilter }
@@ -197,6 +197,7 @@ function FilterBy() {
               <button
                 type="button"
                 onClick={ handleExclude }
+                data-testid={ filter }
                 id={ filter }
                 className="text-star-wars-blue hover:text-red-600
                 font-light"
