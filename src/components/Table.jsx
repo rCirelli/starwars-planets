@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import FilterForm from './Filters/FilterForm';
-// import Intro from './Intro';
+import Intro from './Intro';
 import TableHeader from './TableHeader';
 import TableRow from './TableRow';
 
@@ -10,7 +10,7 @@ function Table() {
     planetsList,
     error,
     isFetching,
-    // intro: { isLogoVisible },
+    intro: { isLogoVisible },
     // filters: {
     //   text: { textFilter },
     // },
@@ -77,13 +77,13 @@ function Table() {
 
   return (
     <div className="w-11/12 flex flex-col justify-center items-center">
-      {/* <Intro />
+      <Intro />
       { error && <span>error</span> }
       { !isFetching && isLogoVisible
         ? table
-        : ''} */}
+        : ''}
       {error && <span>error</span>}
-      {!isFetching ? table : 'Loading...'}
+      {/* {!isFetching ? table : 'Loading...'} */}
     </div>
   );
 }

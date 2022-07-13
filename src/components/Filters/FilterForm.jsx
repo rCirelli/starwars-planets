@@ -12,7 +12,8 @@ function FilterForm() {
       flex flex-col justify-center items-center font-semibold"
     >
       <h3
-        className="text-star-wars-yellow/90 text-4xl"
+        style={ { fontFamily: 'Starjedi' } }
+        className="text-star-wars-yellow/90 text-4xl tracking-widest"
       >
         Star Wars Planets Database
       </h3>

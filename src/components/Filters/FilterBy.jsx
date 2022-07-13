@@ -202,8 +202,8 @@ function FilterBy() {
                 className="text-star-wars-blue hover:text-red-600
                 font-light"
               >
-                x
-                <XCircle size={ 20 } weight="light" />
+                <XCircle size={ 20 } weight="light" id={ filter } />
+                {/* x */}
               </button>
             </div>
           ))}

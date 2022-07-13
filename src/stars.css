@@ -1,3 +1,4 @@
+/* source https://cgreinhold.dev/2021/05/20/star-wars/ */
 .stars {
   background: transparent;
   box-shadow: 970px 909px white , 1px 149px white , 736px 348px white , 1352px 1333px
@@ -193,12 +194,13 @@
 @keyframes fadeout {
 
   from {
-    margin-bottom: 20rem;
+    margin-bottom: 30rem;
+    margin-top: 5rem;
     width: 100%;
   }
 
   to {
-    margin-bottom: 0;
+    margin: 0;
     width: 0%;
   }
 }
@@ -206,4 +208,23 @@
 #name-filter:focus {
 
   @apply outline-none ;
+}
+
+@font-face {
+  font-family: Starjedi;
+  src: local('Starjedi') , url('./fonts/Starjedi.ttf') format('truetype');
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #334155;
+  border-radius: 10px;
 }
